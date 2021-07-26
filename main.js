@@ -6,7 +6,7 @@ mocha.setup({
 });
 
 describe('allKeysAndSymbols', () => {
-  it('allKeysAndSymbols({}) returns ["ha", "constructor", "__defineGetter__", "__defineSetter__", "hasOwnProperty", ...]', () => {
+  it('allKeysAndSymbols({ ha: true }) returns ["ha", "constructor", "__defineGetter__", "__defineSetter__", "hasOwnProperty", ...]', () => {
     const result = allKeysAndSymbols({ ha: 'he' });
     assert.deepEqual(result.slice(0, 5), [
       'ha',
@@ -18,7 +18,7 @@ describe('allKeysAndSymbols', () => {
   });
 });
 
-describe('proxy', () => {
+describe('proxy; object = { year: 2020 (enumerable: false), [symbol]: 42, __proto__: { value: 42 } }', () => {
   let object, symbol;
 
   beforeEach(() => {
@@ -68,9 +68,9 @@ describe('proxy', () => {
 });
 
 describe('MySet', () => {
-  describe('первый набор тестов для MySet (set = new MySet([4, 8, 15, 15, 16, 23, 42]))', () => {
-    let set;
+  let set;
 
+  describe('set = new MySet([4, 8, 15, 15, 16, 23, 42])', () => {
     beforeEach(() => {
       set = new MySet([4, 8, 15, 15, 16, 23, 42]);
     });
@@ -83,7 +83,7 @@ describe('MySet', () => {
       assert.strictEqual(set.size, 6);
     });
 
-    it('работает в цикле for-of', () => {
+    it('работает в цикле for-of: 4-8-15-16-23-42', () => {
       const result = [];
       for (const item of set) {
         result.push(item);
@@ -91,7 +91,7 @@ describe('MySet', () => {
       assert.deepEqual(result, [4, 8, 15, 16, 23, 42]);
     });
 
-    it('есть метод keys', () => {
+    it('set.keys() == [4, 8, 15, 16, 23, 42]', () => {
       const result = [];
       for (const item of set.keys()) {
         result.push(item);
@@ -99,7 +99,7 @@ describe('MySet', () => {
       assert.deepEqual(result, [4, 8, 15, 16, 23, 42]);
     });
 
-    it('есть метод values', () => {
+    it('set.values() == [4, 8, 15, 16, 23, 42]', () => {
       const result = [];
       for (const item of set.values()) {
         result.push(item);
@@ -107,7 +107,7 @@ describe('MySet', () => {
       assert.deepEqual(result, [4, 8, 15, 16, 23, 42]);
     });
 
-    it('есть метод entries', () => {
+    it('set.entries() == [[4, 4], [8, 8], [15, 15], [16, 16], [23, 23], [42, 42]]', () => {
       const result = [];
       for (const item of set.entries()) {
         result.push(item);
@@ -128,7 +128,7 @@ describe('MySet', () => {
     });
   });
 
-  describe('второй набор тестов для MySet', () => {
+  describe('object = { getValue() { return this.value; } }; data = { value: 42 };', () => {
     let object, data;
 
     beforeEach(() => {
@@ -141,7 +141,7 @@ describe('MySet', () => {
     });
 
     describe('есть метод add (set = new MySet()', () => {
-      it('set.add(object).add(object); [...set] === [object, data]', () => {
+      it('set.add(object).add(object); [...set] == [object, data]', () => {
         const set = new MySet();
         set.add(object).add(data);
         assert.deepEqual([...set], [object, data]);
