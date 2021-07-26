@@ -1,7 +1,7 @@
 const arrayHas = (arr, value) => arr.some((item) => Object.is(item, value));
 
 class MySet {
-  constructor(arr) {
+  constructor(arr = []) {
     this.uniqs = arr.reduce((uniqs, val) => (arrayHas(uniqs, val) ? uniqs : [...uniqs, val]), []);
   }
 
